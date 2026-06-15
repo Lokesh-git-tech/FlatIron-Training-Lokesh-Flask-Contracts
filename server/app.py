@@ -8,16 +8,12 @@ app = Flask(__name__)
 
 @app.route('/contract/<id>', methods=['GET'])
 def get_contract(id):
-    contract_info = next((c for c in contracts if c.get("id") == id), None)
+    contract_info = next((c for c in contracts if c.get("id") == int(id)), None)
     response = {}
     if contract_info:
-        response["message"] = "Contract found"
-        response["info"] = contract_info
-        response_code = 200
+        return contract_info["contract_information"], 200
     else:
-        response_code = 404
-        response["message"] = "Contract not found"
-    return response, response_code
+        return "", 404
 
 @app.route('/customer/<customer_name>', methods=['GET'])
 def get_customer(customer_name):
